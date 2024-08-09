@@ -1,0 +1,29 @@
+.trapezoid {
+    width: 0;
+    height: 0;
+    border-bottom: 32px solid theme('colors.primaryColor.DEFAULT');
+    border-right: 32px solid transparent;
+
+    transform: translateX(-1px);
+}
+.home__products {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 40px 20px;
+}
+
+.category-card-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    place-content: center;
+    gap: 20px 10px;
+    animation: fadeIn ease-in 0.3s;
+}
+
+@media (max-width: 414px) {
+    .category-card-list {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        place-content: center;
+    }
+}

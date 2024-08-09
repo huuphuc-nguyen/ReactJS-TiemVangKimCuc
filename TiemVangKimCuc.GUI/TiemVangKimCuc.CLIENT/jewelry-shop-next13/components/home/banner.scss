@@ -1,0 +1,15 @@
+.banner {
+    width: 1140px;
+    padding-top: 50%;
+    transition: all linear 0.35s;
+}
+
+.banner:hover {
+    transform: scale(105%);
+}
+
+@media (max-width: 1023px) {
+    .banner {
+        width: 100vw;
+    }
+}
