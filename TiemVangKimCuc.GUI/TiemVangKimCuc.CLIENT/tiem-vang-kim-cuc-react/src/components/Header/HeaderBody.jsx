@@ -14,10 +14,10 @@ const HeaderBody = () => {
         <MobileNavBar />    
         
         <Link to="/" className="hover:underline cursor-pointer">
-            <img src={logo} alt="logo" className="w-full h-[100px]" />
+            <img src={logo} alt="logo" className="lg:w-full h-[100px]" />
         </Link>
 
-        {/* Handle hdiden here beacuase SearchBar is reused for mobile search, cannot be hidden itself */}
+        {/* Handle hiden here beacuase SearchBar is reused for mobile search, cannot be hidden itself */}
         <div className="hidden lg:block">  
             <SearchBar/>
         </div>

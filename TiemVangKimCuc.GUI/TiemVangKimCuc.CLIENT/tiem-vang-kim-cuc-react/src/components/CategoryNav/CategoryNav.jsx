@@ -51,7 +51,7 @@ const CategoryNav = () => {
 
                     :
 
-                    <ul key='subNav' className="animate-fade-in flex justify-start gap-5">
+                    <ul key='subNav' className="animate-fade-in flex flex-wrap justify-start gap-5">
                         <li onClick={() => setShowDefault(true)}>
                             <CategoryCard img={backButton} title='Trở lại'/>
                         </li>
