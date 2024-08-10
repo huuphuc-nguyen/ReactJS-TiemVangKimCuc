@@ -25,7 +25,7 @@ const CategoryNav = () => {
         <TitleWrapper title='Danh mục sản phẩm'>
             {!isLoading ? 
                 showDefault ? 
-                    <ul key='default' className="animate-fade-in flex flex-wrap justify-between">
+                    <ul key='default' className="animate-fade-in flex flex-wrap justify-center lg:justify-between">
                         <li onClick={() => setShowDefault(false)}>
                             <CategoryCard img={ring} title='Nhẫn'/>
                         </li>
