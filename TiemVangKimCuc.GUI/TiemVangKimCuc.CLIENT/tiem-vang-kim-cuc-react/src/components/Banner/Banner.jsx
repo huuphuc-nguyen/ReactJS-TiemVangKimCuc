@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react'
 import banner1 from '../../assets/images/banner1.png'
 import banner2 from '../../assets/images/banner2.png'
-import banner3 from '../../assets/images/banner3.png'
+import banner3 from '../../assets/images/banner.png'
 
 const images = [banner1, banner2, banner3]
 
