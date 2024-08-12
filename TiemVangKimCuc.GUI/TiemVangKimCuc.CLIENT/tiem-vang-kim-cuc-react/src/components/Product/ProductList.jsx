@@ -7,9 +7,6 @@ const ProductList = ({products, category}) => {
         {products ? products.map(product => <ProductCard key={product.id} product={product} category={category} />) : 
           <>
             <SkeletonProduct/>
-            <SkeletonProduct/>
-            <SkeletonProduct/>
-            <SkeletonProduct/>
           </>}
       </div>
   )

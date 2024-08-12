@@ -1,11 +1,11 @@
 import { useState, useMemo, useEffect } from 'react'
 import { useParams, useSearchParams } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchAsyncGetProductsBySearch, getProducts, removeProducts } from '../../features/product/productSlice';
+import { useDispatch } from 'react-redux';
+import { removeProducts } from '../../features/product/productSlice';
 import ProductList from '../../components/Product/ProductList';
 import useDeviceType from '../../hooks/useDeviceType';
 import ReactPaginate from 'react-paginate';
-import { useGetListCategoriesQuery } from '../../features/api/apiSlice';
+import { useGetListCategoriesQuery, useGetProductsBySearchQuery } from '../../features/api/apiSlice';
 
 // This component handle fetching data for product list
 // There are 2 tasks:
@@ -27,6 +27,7 @@ const ProductPage = () => {
   const [pageIndex, setPageIndex] = useState(1);
   const [title, setTitle] = useState('');
   const [categoryId, setCategoryId] = useState(null); // this is used for fetching data in case this component is navigated by navbar
+  const [triggerFetch, setTriggerFetch] = useState(false);
 
   const [searchKey, setSearchKey] = useState('');
   const [chatLieus, setChatLieus] = useState('');
@@ -35,7 +36,6 @@ const ProductPage = () => {
   // Hooks
   const [searchParams] = useSearchParams();
   const dispatch = useDispatch();
-  const products = useSelector(getProducts)
   const {data:categories, isLoading} = useGetListCategoriesQuery();
   const deviceType = useDeviceType();
 
@@ -66,8 +66,14 @@ const ProductPage = () => {
     else {
       setTitle('');
     }
+    
 
   }, [category, categories, isLoading]);
+
+  useEffect(() => {
+    return () => {dispatch(removeProducts())}
+  }
+  , [dispatch])
 
   // 2nd Task: Fetch data
 
@@ -101,37 +107,39 @@ const ProductPage = () => {
       setSearchKey(searchParams.get('searchKey') || '');
       setChatLieus(searchParams.get('chatLieus') ? searchParams.get('chatLieus').split(',') : '');
       setLoaiTrangSucs(searchParams.get('loaiTrangSucs') ? searchParams.get('loaiTrangSucs').split(',') : '');
-    }
+      setTriggerFetch(true);
+    } 
 
     if (!isLoading && category === 'tat-ca-san-pham') {
       setLoaiTrangSucs('');
+      setTriggerFetch(true);
     }
 
     if (!isLoading && category !== 'tim-kiem' && category !== 'tat-ca-san-pham') {
       setLoaiTrangSucs([categoryId]);
+      setTriggerFetch(true);
     }
   }, [searchParams, category, isLoading, categories, categoryId]);
 
-  // Fetch data
-  useEffect(() => {
-     // This condition is important !!: if categoryId is null and still fetching data -> a rapid call will be made after useParam is updated 
-     // -> if the anwser for first call (categoryId = '') is returned after 2nd call -> the productlist will erase and empty
-    if(categoryId !== null && !isLoading) { 
-      console.log('fetching data')
-      console.log(filter)
-      dispatch(fetchAsyncGetProductsBySearch({ filterObj: filter, paginationObj: pagination }));
-    }
 
-    return () => {dispatch(removeProducts())}
-  }, [dispatch, filter, pagination, categoryId, loaiTrangSucs, isLoading]);
+  // Fetch products
+  const { data: products, isLoading: isProductsLoading } = useGetProductsBySearchQuery(
+    { filterObj: filter, paginationObj: pagination },
+    { skip: !triggerFetch } // Skip fetching until triggerFetch is true, wait for filterObj is set by above logic
+  );
 
   return (
     <div className='lg:px-24 px-[2rem]'>
       <h1 className='w-full text-center font-bold text-3xl mt-5 mb-10'>
         {title}
       </h1>
-      <ProductList products={products.data} category={category}/> 
-      <ReactPaginate
+
+      {/* Apply product loading to prevent user use navigation bar continuosly cause interupt fetching data */}
+      {(!isProductsLoading && products) &&  
+       <>
+        <ProductList products={products.data} category={category}/>
+
+        <ReactPaginate
         breakLabel='...'
         nextLabel='>'
         pageRangeDisplayed={1}
@@ -142,11 +150,15 @@ const ProductPage = () => {
         onPageChange={(e) => {setPageIndex(e.selected + 1)}}
 
         className='flex justify-center mt-16 items-center gap-3'
-        previousLinkClassName='shadow-md border border-[1px] border-primary grid place-items-center w-8 text-md rounded-md'
+        previousLinkClassName='shadow-md border border-[1px] border-primary grid place-items-center w-8 text-md rounded-md text-primary'
         pageLinkClassName='shadow-md border border-[1px] border-primary grid place-items-center w-8 text-md rounded-md'
-        nextLinkClassName='shadow-md border border-[1px] border-primary grid place-items-center w-8 text-md rounded-md cursor-pointer'
+        nextLinkClassName='shadow-md border border-[1px] border-primary grid place-items-center w-8 text-md rounded-md cursor-pointer text-primary'
         activeLinkClassName='shadow-md bg-primary text-white transition-all duration-300'
-      />
+        />
+       </>}
+      
+
+
     </div>
   )
 }

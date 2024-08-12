@@ -9,8 +9,6 @@ import { Toaster } from 'sonner';
 import ProducDetailPage from './pages/ProductDetailPage/ProductDetailPage'
 
 // Hardcode these product categories at: 
-//  Header -> Mobile Navbar
-//  Header -> Header Nav (don't use map here)
 //  CategoryNav (due to using thumbnail)
 //  ShowroomSection 
 

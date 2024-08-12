@@ -10,7 +10,7 @@ import MobileNavBar from "./MobileNavBar"
 
 const HeaderBody = () => {
   return (
-    <div className="flex justify-around items-center text-md my-1">
+    <div className="flex justify-around items-center text-md my-1 lg:px-24 px-[2rem]">
         <MobileNavBar />    
         
         <Link to="/" className="hover:underline cursor-pointer">

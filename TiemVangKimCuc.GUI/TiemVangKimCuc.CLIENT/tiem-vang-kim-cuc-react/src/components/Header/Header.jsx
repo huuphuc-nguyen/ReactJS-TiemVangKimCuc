@@ -5,7 +5,7 @@ import HeaderNav from './HeaderNav'
 const Header = () => {
 
   return (
-    <header className='w-full mt-2 transition-all duration-300 lg:px-24 px-[2rem]'>
+    <header className='w-full mt-2 transition-all duration-300'>
         {/* hidden in small resolution */}
         <HeaderContact/>
 

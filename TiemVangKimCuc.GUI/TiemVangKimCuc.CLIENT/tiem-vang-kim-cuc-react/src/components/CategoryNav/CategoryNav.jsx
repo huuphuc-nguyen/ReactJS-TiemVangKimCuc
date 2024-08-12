@@ -5,6 +5,7 @@ import backButton from '../../assets/categoryIcons/back-button.png'
 import ringFemale from '../../assets/categoryIcons/ring2.png'
 import ringCouple from '../../assets/categoryIcons/ring3.png'
 import bracelet from '../../assets/categoryIcons/bracelet.png'
+import bracelet_2 from '../../assets/categoryIcons/bracelet_2.png'
 import pendant from '../../assets/categoryIcons/pendant.png'
 import earrings from '../../assets/categoryIcons/earrings.png'
 import necklace from '../../assets/categoryIcons/necklace.png'
@@ -25,7 +26,7 @@ const CategoryNav = () => {
         <TitleWrapper title='Danh mục sản phẩm'>
             {!isLoading ? 
                 showDefault ? 
-                    <ul key='default' className="animate-fade-in flex flex-wrap justify-center lg:justify-between">
+                    <ul key='default' className="animate-fade-in flex flex-wrap justify-center lg:justify-between gap-2 lg:gap-5">
                         <li onClick={() => setShowDefault(false)}>
                             <CategoryCard img={ring} title='Nhẫn'/>
                         </li>
@@ -33,16 +34,19 @@ const CategoryNav = () => {
                             <CategoryCard img={bracelet} title='Vòng tay' href={`/san-pham/${categories[3].idForSEO}`}/>
                         </li>
                         <li>
-                            <CategoryCard img={pendant} title='Lắc tay' href={`/san-pham/${categories[4].idForSEO}`}/>
+                            <CategoryCard img={bracelet_2} title='Lắc tay' href={`/san-pham/${categories[4].idForSEO}`}/>
                         </li>
                         <li>
                             <CategoryCard img={earrings} title='Bông tai' href={`/san-pham/${categories[5].idForSEO}`}/>
                         </li>
                         <li>
-                            <CategoryCard img={necklace} title='Mặt dây' href={`/san-pham/${categories[6].idForSEO}`}/>
+                            <CategoryCard img={pendant} title='Mặt dây' href={`/san-pham/${categories[6].idForSEO}`}/>
                         </li>
                         <li>
                             <CategoryCard img={charm} title='Hạt charm' href={`/san-pham/${categories[7].idForSEO}`}/>
+                        </li>
+                        <li>
+                            <CategoryCard img={necklace} title='Dây chuyền' href={`/san-pham/${categories[8].idForSEO}`}/>
                         </li>
                         <li>
                             <CategoryCard img={allCate} title='Tất cả' href='/san-pham/tat-ca-san-pham'/>
