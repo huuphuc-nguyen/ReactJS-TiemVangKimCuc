@@ -1,4 +1,3 @@
-import { get } from "react-scroll/modules/mixins/scroller";
 import axiosInstance from "./axiosConfig";
 
 const productApis = {

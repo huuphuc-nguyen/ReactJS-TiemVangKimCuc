@@ -31,12 +31,31 @@ const Magnifier = ({imgUrl}) => {
         setShowMagnifier(true)
     }   
 
+    const handleTouchMove = (e) => {
+      const {top, left } = e.target.getBoundingClientRect();
+      const touch = e.touches[0]
+      
+      // must subtract left and top to get position relatively to this component
+      setCursorPosition({x: touch.clientX - left, y: touch.clientY - top})
+    }
+
+    const handleTouch = (e) => {
+      const {top, left} = e.target.getBoundingClientRect();
+      const touch = e.touches[0]
+      setCursorPosition({x: touch.clientX - left, y: touch.clientY - top})
+  
+      setShowMagnifier(true)
+  }
+
   return (
     <div 
         className='w-full h-full relative'
         onMouseEnter={handleMouseEnter}
         onMouseLeave={()=>setShowMagnifier(false)}
-        onMouseMove={handleMouseMove}>
+        onMouseMove={handleMouseMove}
+        onTouchMove={handleTouchMove}
+        onTouchStart={handleTouch}
+    >
 
       <img 
         src={imgUrl}
