@@ -52,6 +52,18 @@ export const productApi = createApi({
                 }
             },
         }),
+        deleteProduct: builder.query({
+            queryFn: async (id) => {
+                try{
+                    const data = await productApis.deleteProductById(id)
+
+                    return {data};
+                }
+                catch (error) {
+                    return {error: error.message};
+                }
+            },
+        }),
 
     }),
 }); 
@@ -60,4 +72,6 @@ export const {
     useGetProductsBySearchQuery, 
     useGetListCategoriesQuery, 
     useLazyGetProductsBySearchQuery, 
-    useGetListMaterialsQuery} = productApi;
+    useGetListMaterialsQuery,
+    useDeleteProductQuery,
+    useLazyDeleteProductQuery} = productApi;

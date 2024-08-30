@@ -1,5 +1,4 @@
 import { createContext, useState, useMemo } from "react";
-import { set } from "react-hook-form";
 
 export const FilterContext = createContext();
 
@@ -8,7 +7,7 @@ export const FilterProvider = ({ children }) => {
     const [selectedMaterialId, setSelectedMaterialId] = useState([]);
     const [searchKey, setSearchKey] = useState('');
     const [pageIndex, setPageIndex] = useState(1);
-    const [pageSize, setPageSize] = useState(10);
+    const [pageSize, setPageSize] = useState(50);
     const [totalPage, setTotalPage] = useState(0); 
 
     console.log('context');

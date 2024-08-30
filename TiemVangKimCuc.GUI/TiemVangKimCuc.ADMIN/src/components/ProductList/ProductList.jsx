@@ -6,7 +6,7 @@ import { useGetProductsBySearchQuery } from '../../features/api/apiSlice'
 
 const ProductList = () => {
     const {filterObj, paginationObj, setTotalPage} = useContext(FilterContext);
-    const {data: productResponse, isProductLoading} = useGetProductsBySearchQuery({filterObj, paginationObj});
+    const {data: productResponse, isProductLoading, refetch} = useGetProductsBySearchQuery({filterObj, paginationObj});
     
     useEffect(() => {
         if (!isProductLoading) {
@@ -23,7 +23,7 @@ const ProductList = () => {
         {isProductLoading ? 
             <Loading /> : 
             productResponse?.data.map((product) => (
-                <ProductCard key={product.id} product={product}/>
+                <ProductCard key={product.id} product={product} refetch={refetch}/>
             ))
         }
         </div>

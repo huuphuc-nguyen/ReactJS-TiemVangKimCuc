@@ -1,7 +1,7 @@
 import FilterList from '../FilterList/FilterList'
 import Search from '../Search/Search'
-import ReactPaginate from 'react-paginate';
 import ProductList from '../ProductList/ProductList';
+import Pagination from '../Pagination/Pagination';
 
 const SanPhamDashboard = () => {
   
@@ -29,28 +29,7 @@ const SanPhamDashboard = () => {
       </h1>
       <ProductList />
 
-      {/* <ReactPaginate
-        breakLabel='...'
-        nextLabel='>'
-        pageRangeDisplayed={1}
-        pageCount={productResponse?.totalPages}
-        previousLabel='<'
-        renderOnZeroPageCount={null}
-
-        onPageChange={(e) => {
-            setPageIndex(e.selected + 1); 
-            window.scrollTo({
-              top: 550,
-              behavior: 'smooth'
-            }
-            )}}
-
-        className='flex justify-center mt-16 items-center gap-3'
-        previousLinkClassName='shadow-md border border-[1px] border-primary grid place-items-center w-8 text-md rounded-md text-primary'
-        pageLinkClassName='shadow-md border border-[1px] border-primary grid place-items-center w-8 text-md rounded-md'
-        nextLinkClassName='shadow-md border border-[1px] border-primary grid place-items-center w-8 text-md rounded-md cursor-pointer text-primary'
-        activeLinkClassName='shadow-md bg-primary text-white transition-all duration-300'
-        /> */}
+      <Pagination />
       
     </main>
   )

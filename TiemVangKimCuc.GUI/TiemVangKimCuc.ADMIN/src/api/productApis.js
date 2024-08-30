@@ -30,7 +30,12 @@ const productApis = {
   getProductById: async(id) => {
     const response = await axiosInstance.get(`/api/SanPham/GetSanPham/?id=${id}`);
     return response;
-  }
+  },
+
+  deleteProductById: async(id) => {
+    const response = await axiosInstance.delete(`/api/SanPham/XoaSanPham/?id=${id}`);
+    return response;
+  },
 }
 
 export default productApis;
