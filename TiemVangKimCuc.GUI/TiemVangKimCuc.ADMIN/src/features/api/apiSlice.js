@@ -64,7 +64,17 @@ export const productApi = createApi({
                 }
             },
         }),
-
+        getProductsById: builder.query({
+            queryFn: async (id) => {
+                try{
+                    const data = await productApis.getProductById(id);
+                    return {data: data.dataResult};
+                }
+                catch (error) {
+                    return {error: error.message};
+                }
+            },
+        }),
     }),
 }); 
 
@@ -74,4 +84,5 @@ export const {
     useLazyGetProductsBySearchQuery, 
     useGetListMaterialsQuery,
     useDeleteProductQuery,
-    useLazyDeleteProductQuery} = productApi;
+    useLazyDeleteProductQuery,
+    useGetProductsByIdQuery} = productApi;

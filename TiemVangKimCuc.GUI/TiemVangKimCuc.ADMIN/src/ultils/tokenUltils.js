@@ -1,5 +1,8 @@
 import { jwtDecode } from "jwt-decode";
 
+// This funciton is used in authSlice.js
+// Use setting isAuthen in slice by loading and checking the token from local storage 
+
 export const isTokenValid = (token) => {
     if (!token) return false;
 

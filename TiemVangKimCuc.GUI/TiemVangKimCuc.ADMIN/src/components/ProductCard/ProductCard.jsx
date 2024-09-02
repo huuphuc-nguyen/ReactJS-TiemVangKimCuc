@@ -86,7 +86,9 @@ const ProductCard = ({product, refetch}) => {
 
       <div className="flex flex-row items-center justify-end gap-3 mr-5 cursor-pointer" >
         <Tooltip message='Chỉnh sửa' className='-mt-12' offset>
-          <GoPencil size={20} className="z-20 text-primary"/>
+          <Link to={`/admin/dashboard/san-pham/chinh-sua/${product.id}`}> 
+            <GoPencil size={20} className="z-20 text-primary"/>
+          </Link>
         </Tooltip>
         <Tooltip message='Xóa sản phẩm' className='-mt-12' offset>
           <RiDeleteBin4Line size={20} className="z-20 text-red-500" onClick={() => {setIsModalOpen(true)}}/>
