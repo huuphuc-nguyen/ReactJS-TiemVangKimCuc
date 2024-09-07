@@ -67,8 +67,13 @@ export const productApi = createApi({
         getProductsById: builder.query({
             queryFn: async (id) => {
                 try{
-                    const data = await productApis.getProductById(id);
-                    return {data: data.dataResult};
+                    if(id) {
+                        const data = await productApis.getProductById(id);
+                        return {data: data.dataResult};
+                    }
+                    else {
+                        return {data: null}
+                    }
                 }
                 catch (error) {
                     return {error: error.message};
