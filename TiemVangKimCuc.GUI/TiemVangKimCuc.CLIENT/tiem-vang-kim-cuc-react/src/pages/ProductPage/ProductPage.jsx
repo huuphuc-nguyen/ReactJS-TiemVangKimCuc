@@ -5,7 +5,7 @@ import { removeProducts } from '../../features/product/productSlice';
 import ProductList from '../../components/Product/ProductList';
 import useDeviceType from '../../hooks/useDeviceType';
 import ReactPaginate from 'react-paginate';
-import { useGetListCategoriesQuery, useGetProductsBySearchQuery } from '../../features/api/apiSlice';
+import { useGetListCategoriesQuery, useLazyGetProductsBySearchQuery } from '../../features/api/apiSlice';
 
 // This component handle fetching data for product list
 // There are 2 tasks:
@@ -18,7 +18,6 @@ import { useGetListCategoriesQuery, useGetProductsBySearchQuery } from '../../fe
 // 2. Click on search button
 // 3. Click on 'Tất cả sản phẩm'
 
-
 const ProductPage = () => {
 
   useEffect(() => {window.scrollTo(0,0)},[])
@@ -27,7 +26,6 @@ const ProductPage = () => {
   const [pageIndex, setPageIndex] = useState(1);
   const [title, setTitle] = useState('');
   const [categoryId, setCategoryId] = useState(null); // this is used for fetching data in case this component is navigated by navbar
-  const [triggerFetch, setTriggerFetch] = useState(false);
 
   const [searchKey, setSearchKey] = useState('');
   const [chatLieus, setChatLieus] = useState('');
@@ -54,19 +52,15 @@ const ProductPage = () => {
 
       if (category === 'tim-kiem') {
         setTitle('Kết quả tìm kiếm');
-        setCategoryId(0);
       }
 
       if (category === 'tat-ca-san-pham') {
         setTitle('Tất cả sản phẩm');
-        // Allow fetching data when categoryId is !null
-        setCategoryId(0);
       }
     }
     else {
       setTitle('');
     }
-    
 
   }, [category, categories, isLoading]);
 
@@ -101,32 +95,45 @@ const ProductPage = () => {
       loaiTrangSucs: loaiTrangSucs,
     }), [searchKey, chatLieus, loaiTrangSucs]);
 
-  // Handle variables for searching
+    // Fetch data
+    const [searchProduct, {data: products, isLoading: isProductsLoading}] = useLazyGetProductsBySearchQuery();
+
   useEffect(() => {
     if (!isLoading && category === 'tim-kiem') {
       setSearchKey(searchParams.get('searchKey') || '');
       setChatLieus(searchParams.get('chatLieus') ? searchParams.get('chatLieus').split(',') : '');
       setLoaiTrangSucs(searchParams.get('loaiTrangSucs') ? searchParams.get('loaiTrangSucs').split(',') : '');
-      setTriggerFetch(true);
-    } 
+      searchProduct({ filterObj: filter, paginationObj: pagination });
+    }
 
     if (!isLoading && category === 'tat-ca-san-pham') {
       setLoaiTrangSucs('');
-      setTriggerFetch(true);
+      searchProduct({ filterObj: filter, paginationObj: pagination });
     }
 
+  }, [searchParams, category, isLoading, pagination]);
+
+  useEffect(() => {
     if (!isLoading && category !== 'tim-kiem' && category !== 'tat-ca-san-pham') {
-      setLoaiTrangSucs([categoryId]);
-      setTriggerFetch(true);
+      setSearchKey('');
+      setChatLieus('');
+      if (categoryId !== null) {
+        setLoaiTrangSucs(prev => {
+          if (prev.length === 1 && prev[0] === categoryId) {
+            return prev;
+          }
+          return [categoryId];
+        });
+      }
     }
-  }, [searchParams, category, isLoading, categories, categoryId]);
+  }, [searchParams, category, categoryId, isLoading]);
 
-
-  // Fetch products
-  const { data: products, isLoading: isProductsLoading } = useGetProductsBySearchQuery(
-    { filterObj: filter, paginationObj: pagination },
-    { skip: !triggerFetch } // Skip fetching until triggerFetch is true, wait for filterObj is set by above logic
-  );
+  useEffect(() => {
+    if (!isLoading && filter) {
+      searchProduct({ filterObj: filter, paginationObj: pagination });
+      console.log('filter', filter);
+    }
+  }, [searchParams, loaiTrangSucs, pagination, isLoading]);
 
   return (
     <div className='lg:px-24 px-[2rem]'>
