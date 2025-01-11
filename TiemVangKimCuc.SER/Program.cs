@@ -55,8 +55,7 @@ builder.Services.AddScoped<ISeedService, SeedService>();
 // Connect SQL
 var connectionString = Environment.GetEnvironmentVariable("AZURE_SQL_CONNECTIONSTRING");
 
-builder.Services.AddDbContext<ApplicationDbContext>(x => x.UseSqlServer(connectionString
-    ));
+builder.Services.AddDbContext<ApplicationDbContext>(x => x.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 0, 28))));
 
 
 // Add Authentication

@@ -2,7 +2,6 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebTiemVangKimCuc.SER.Infrastructure;
 
@@ -18,9 +17,7 @@ namespace WebTiemVangKimCuc.SER.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.10")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
-
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+                .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("WebTiemVangKimCuc.SER.Domain.Entities.DanhMuc.DmChatLieu", b =>
                 {
@@ -28,13 +25,11 @@ namespace WebTiemVangKimCuc.SER.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"));
-
                     b.Property<string>("ChatLieu")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("MoTa")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
@@ -47,13 +42,11 @@ namespace WebTiemVangKimCuc.SER.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
                     b.Property<string>("LoaiTrangSuc")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("MoTa")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
@@ -64,7 +57,7 @@ namespace WebTiemVangKimCuc.SER.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("char(36)");
 
                     b.Property<int>("ChatLieuId")
                         .HasColumnType("int")
@@ -74,12 +67,12 @@ namespace WebTiemVangKimCuc.SER.Migrations
                         .HasColumnType("datetime");
 
                     b.Property<string>("ImgUrl")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<bool>("IsDeleted")
                         .HasMaxLength(1)
                         .IsUnicode(false)
-                        .HasColumnType("bit")
+                        .HasColumnType("tinyint(1)")
                         .IsFixedLength();
 
                     b.Property<int>("LoaiTrangSucId")
@@ -87,17 +80,17 @@ namespace WebTiemVangKimCuc.SER.Migrations
                         .HasColumnName("LoaiTrangSuc_ID");
 
                     b.Property<string>("MoTa")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("TenSanPham")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("TrongLuongSanPham")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime(6)");
 
                     b.HasKey("Id");
 
@@ -111,20 +104,20 @@ namespace WebTiemVangKimCuc.SER.Migrations
             modelBuilder.Entity("WebTiemVangKimCuc.SER.Domain.Entities.User", b =>
                 {
                     b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(450)")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("TaiKhoan");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("FullName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("longtext")
                         .HasColumnName("HoTen");
 
                     b.Property<string>("PassWord")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("longtext")
                         .HasColumnName("MatKhau");
 
                     b.HasKey("UserName");

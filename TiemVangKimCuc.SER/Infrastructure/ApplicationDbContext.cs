@@ -23,7 +23,10 @@ namespace WebTiemVangKimCuc.SER.Infrastructure
             {
                 optionsBuilder
                     .LogTo(Console.WriteLine)
-                    .UseSqlServer(Environment.GetEnvironmentVariable("AZURE_SQL_CONNECTIONSTRING"),     x => x.UseNetTopologySuite());
+                    .UseMySql(
+                        Environment.GetEnvironmentVariable("AZURE_MYSQL_CONNECTIONSTRING"), // Updated to match the MySQL connection string environment variable
+                        new MySqlServerVersion(new Version(9, 1, 0))// Use your MySQL server version
+                    );
             }
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
