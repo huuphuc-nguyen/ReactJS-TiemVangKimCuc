@@ -3,6 +3,7 @@
 FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
 EXPOSE 5000
+ENV ASPNETCORE_URLS=http://*:5000
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 ARG BUILD_CONFIGURATION=Release
@@ -20,4 +21,8 @@ RUN dotnet publish "./WebTiemVangKimCuc.SER.csproj" -c $BUILD_CONFIGURATION -o /
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+
+# Copy the .env file into the container
+COPY .env /app/.env
+
 ENTRYPOINT ["dotnet", "WebTiemVangKimCuc.SER.dll"]
