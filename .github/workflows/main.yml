@@ -1,0 +1,30 @@
+name: Deploy Portfolio To VPS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+
+    - name: SSH Remote Commands
+      uses: appleboy/ssh-action@v1.2.0
+      with:
+        host: ${{ secrets.VPS_HOST }}
+        username: ${{ secrets.VPS_USER }}
+        key: ${{ secrets.VPS_SSH_KEY }}
+        port: ${{ secrets.VPS_PORT }}
+        proxy_port: ${{ secrets.VPS_PORT }}
+        script: |
+          cd ~/gitproject/ReactJS-TiemVangKimCuc/TiemVangKimCuc.SER
+          git pull
+          docker build -t tiemvangkimcuc.ser .
+          docker stop tiemvangkimcuc.ser-container || true
+          docker rm tiemvangkimcuc.ser-container || true
+          docker run -d --name tiemvangkimcuc.ser-container -p 5000:5000 tiemvangkimcuc.ser
