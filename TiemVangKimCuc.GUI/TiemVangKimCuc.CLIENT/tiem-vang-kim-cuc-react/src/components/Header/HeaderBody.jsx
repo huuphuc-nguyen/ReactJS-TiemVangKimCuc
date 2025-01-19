@@ -26,7 +26,7 @@ const HeaderBody = () => {
         <ul className="hidden lg:flex items-center text-primary gap-3">
         
             {/* Facebook */}
-            <Tooltip message={"Follow Facebook: Tiệm Vàng Kim Cúc"} position={'top'}>
+            <Tooltip message={"Follow Facebook: Tiệm Vàng Kim Cúc Test"} position={'top'}>
                 <li>
                     <a className="hover:text-sky-600" href="https://www.facebook.com/profile.php?id=100054235431878" target="_blank">
                         <AiFillFacebook size={20}/>
