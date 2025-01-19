@@ -72,7 +72,7 @@ const Magnifier = ({imgUrl}) => {
             left: `${cursorPosition.x - 90}px`,
             top: `${cursorPosition.y - 90}px`,
             pointerEvents: 'none',
-            zIndex: 1000,
+            zIndex: 998,
             transition: 'opacity 0.2s ease-in-out',
         }}>
             {/* Magnifier background and style */}
