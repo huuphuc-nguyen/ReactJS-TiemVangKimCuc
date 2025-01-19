@@ -28,3 +28,9 @@ jobs:
           docker stop tiemvangkimcuc.ser-container || true
           docker rm tiemvangkimcuc.ser-container || true
           docker run -d --name tiemvangkimcuc.ser-container -p 5000:5000 tiemvangkimcuc.ser
+          cd ~/gitproject/ReactJS-TiemVangKimCuc/TiemVangKimCuc.GUI/TiemVangKimCuc.CLIENT/tiem-vang-kim-cuc-react
+          git pull
+          docker build -t tiemvangkimcuc.client .
+          docker stop tiemvangkimcuc.client-container || true
+          docker rm tiemvangkimcuc.client-container || true
+          docker run -d --name tiemvangkimcuc.client-container -p 3003:3003 tiemvangkimcuc.client
